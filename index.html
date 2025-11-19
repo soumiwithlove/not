@@ -35,7 +35,7 @@
     .inner-screen {
       position: relative;
       width: 100%;
-      height: 80vh;              /* ekranın %80'i */
+      height: 80vh;              
       background: #000000;
       border-radius: 18px;
       overflow: hidden;
@@ -53,7 +53,6 @@
       cursor: default;
     }
 
-    /* Başlangıçta çok hafif bir açıklama */
     .instruction {
       font-size: 13px;
       color: #9ca3af;
@@ -64,7 +63,7 @@
       pointer-events: none;
     }
 
-    /* Tıklanan yerlerde çıkan parıltılı yazılar */
+    
     .floating-text {
       position: absolute;
       font-size: 22px;
@@ -91,7 +90,6 @@
       }
     }
 
-    /* Gizli mesaj, sadece siyah ekran beyaza döndükten sonra görünecek */
     .secret-message {
       max-width: 600px;
       text-align: center;
@@ -129,19 +127,20 @@
     const kelimeler = [
       "SG",
       "noldu bakakaldın",
-      "kasar",
+      "takılmayacak kadar duygulusun yine",
       "öyle mi oldu şimdi kanka",
       "bir dahaki sefere sayaç ekle",
       "dalga öyle geçilmez"
+      "bu kadar ugrasma bi dahakine"
     ];
 
     const renkler = [
-      "#fb7185", // pembe
-      "#22c55e", // yeşil
-      "#38bdf8", // mavi
-      "#eab308", // sarı
-      "#a855f7", // mor
-      "#f97316"  // turuncu
+      "#fb7185",
+      "#22c55e", 
+      "#38bdf8", 
+      "#eab308", 
+      "#a855f7", 
+      "#f97316"
     ];
 
     const inner = document.getElementById("inner-screen");
@@ -164,14 +163,14 @@
       yazi.className = "floating-text";
       yazi.innerText = kelimeler[index];
 
-      // Renk random
+
       yazi.style.color = renkler[Math.floor(Math.random() * renkler.length)];
 
-      // Tıklanan yerin, inner-screen içindeki konumu
+      
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
 
-      // Yazıyı tıklanan noktanın ortasına yakın konumlandır
+
       yazi.style.left = (x - 20) + "px";
       yazi.style.top  = (y - 10) + "px";
 
@@ -180,7 +179,7 @@
 
       index++;
 
-      // Tüm kelimeler bittiyse: siyah ekran -> beyaz + gizli mesaj
+      
       if (index >= kelimeler.length) {
         finished = true;
         setTimeout(() => {
@@ -191,4 +190,5 @@
   </script>
 </body>
 </html>
+
 
