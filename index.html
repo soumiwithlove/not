@@ -1,18 +1,9 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-P55R71D5FM"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-P55R71D5FM');
-</script>
-
   <meta charset="UTF-8">
   <title>Not Sayfası</title>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -21,22 +12,117 @@
       color: #333;
       max-width: 600px;
       margin: auto;
+      position: relative;
+      cursor: pointer;
     }
+
     .note {
       background: #fff;
       padding: 20px;
       border-left: 5px solid #007acc;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
+
+    /* Parıltılı yazı */
+    .floating-text {
+      position: absolute;
+      font-size: 22px;
+      font-weight: bold;
+      opacity: 1;
+      animation: glowFloat 2s ease-out forwards;
+      pointer-events: none;
+      text-shadow: 0 0 8px rgba(255,255,255,0.8),
+                   0 0 15px rgba(255,255,255,0.6);
+    }
+
+    @keyframes glowFloat {
+      0% { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-50px) scale(1.2); }
+    }
+
+    /* Gizli mesaj ekranı */
+    #secret-message {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      color: #fff;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 30px;
+      font-size: 20px;
+      z-index: 999;
+      line-height: 1.6;
+    }
+
+    #secret-message.show {
+      display: flex;
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
   </style>
 </head>
+
 <body>
-  <h2>📌sevgilime<3 </h2>
+  <h2>📌 eski sevgilime &lt;3</h2>
+
   <div class="note">
-    <p>
-      
-    </p>
+    <p></p>
   </div>
+
+  <!-- Gizli mesaj -->
+  <div id="secret-message">
+    keşke böyle şeyler yapacağına biraz sevginin arkasında dursaydın,<br>
+    ben senden sadece bunu istemiştim.<br><br>
+    Böyle şeylerle bu son uğraşım ve sana verdiğim son etkileşim.
+  </div>
+
+  <script>
+    let kelimeler = [
+      "SG",
+      "noldu bakakaldın",
+      "kasar",
+      "öyle mi oldu şimdi kanka",
+      "bir dahaki sefere sayaç ekle",
+      "dalga öyle geçilmez"
+    ];
+
+    const renkler = [
+      "#ff2e63", "#00b8a9", "#845ec2",
+      "#ff9600", "#0081cf", "#ff4d6d"
+    ];
+
+    let index = 0; 
+
+    document.body.addEventListener("click", function(e) {
+      
+      if (index >= kelimeler.length) {
+        document.getElementById("secret-message").classList.add("show");
+        return;
+      }
+
+      const yazi = document.createElement("div");
+      yazi.className = "floating-text";
+
+      yazi.innerText = kelimeler[index];
+      yazi.style.color = renkler[Math.floor(Math.random() * renkler.length)];
+
+      yazi.style.left = e.clientX + "px";
+      yazi.style.top = e.clientY + "px";
+
+      document.body.appendChild(yazi);
+
+      setTimeout(() => yazi.remove(), 2000);
+
+      index++; 
+    });
+  </script>
+
 </body>
 </html>
 
