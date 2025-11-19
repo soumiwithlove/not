@@ -5,85 +5,128 @@
   <title>Not Sayfası</title>
 
   <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: Arial, sans-serif;
-      background-color: #f9f9f9;
-      padding: 40px;
-      color: #333;
-      max-width: 600px;
-      margin: auto;
+      background-color: #f3f4f6;
+      color: #111827;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wrapper {
+      width: 100%;
+      max-width: 900px;
+      padding: 16px;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin-bottom: 12px;
+    }
+
+    .inner-screen {
       position: relative;
+      width: 100%;
+      height: 80vh;              /* ekranın %80'i */
+      background: #000000;
+      border-radius: 18px;
+      overflow: hidden;
       cursor: pointer;
+      transition: background 0.7s ease, color 0.7s ease;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .note {
-      background: #fff;
-      padding: 20px;
-      border-left: 5px solid #007acc;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    .inner-screen.finished {
+      background: #ffffff;
+      color: #111827;
+      cursor: default;
     }
 
-    /* Parıltılı yazı */
+    /* Başlangıçta çok hafif bir açıklama */
+    .instruction {
+      font-size: 13px;
+      color: #9ca3af;
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+
+    /* Tıklanan yerlerde çıkan parıltılı yazılar */
     .floating-text {
       position: absolute;
       font-size: 22px;
       font-weight: bold;
       opacity: 1;
-      animation: glowFloat 2s ease-out forwards;
+      animation: floatGlow 2s ease-out forwards;
       pointer-events: none;
-      text-shadow: 0 0 8px rgba(255,255,255,0.8),
-                   0 0 15px rgba(255,255,255,0.6);
+      text-shadow:
+        0 0 6px rgba(255,255,255,0.9),
+        0 0 14px rgba(255,255,255,0.6),
+        0 0 22px rgba(255,255,255,0.4);
+      z-index: 2;
+      white-space: nowrap;
     }
 
-    @keyframes glowFloat {
-      0% { opacity: 1; transform: translateY(0) scale(1); }
-      100% { opacity: 0; transform: translateY(-50px) scale(1.2); }
+    @keyframes floatGlow {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-50px) scale(1.1);
+      }
     }
 
-    /* Gizli mesaj ekranı */
-    #secret-message {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.88);
-      color: #fff;
-      display: none;
-      align-items: center;
-      justify-content: center;
+    /* Gizli mesaj, sadece siyah ekran beyaza döndükten sonra görünecek */
+    .secret-message {
+      max-width: 600px;
       text-align: center;
-      padding: 30px;
-      font-size: 20px;
-      z-index: 999;
-      line-height: 1.6;
+      line-height: 1.7;
+      font-size: 18px;
+      opacity: 0;
+      transition: opacity 0.7s ease;
+      padding: 0 24px;
     }
 
-    #secret-message.show {
-      display: flex;
-      animation: fadeIn 0.5s ease-out forwards;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
+    .inner-screen.finished .secret-message {
+      opacity: 1;
     }
   </style>
 </head>
 
 <body>
-  <h2>📌 eski sevgilime &lt;3</h2>
+  <div class="wrapper">
+    <h2>📌 sevgilime &lt;3</h2>
 
-  <div class="note">
-    <p></p>
-  </div>
-
-  <!-- Gizli mesaj -->
-  <div id="secret-message">
-    keşke böyle şeyler yapacağına biraz sevginin arkasında dursaydın,<br>
-    ben senden sadece bunu istemiştim.<br><br>
-    Böyle şeylerle bu son uğraşım ve sana verdiğim son etkileşim.
+    <div class="inner-screen" id="inner-screen">
+      <div class="secret-message" id="secret-message">
+        keşke böyle şeyler yapacağına biraz sevginin arkasında dursaydın,<br>
+        ben senden sadece bunu istemiştim.<br><br>
+        böyle şeylerle bu son uğraşım ve sana verdiğim son etkileşim.
+      </div>
+      <div class="instruction" id="instruction">
+        ekrana dokundukça cümleler çıkacak. hepsi bittiğinde son not görünecek.
+      </div>
+    </div>
   </div>
 
   <script>
-    let kelimeler = [
+    // Sırayla gösterilecek cümleler
+    const kelimeler = [
       "SG",
       "noldu bakakaldın",
       "kasar",
@@ -93,37 +136,59 @@
     ];
 
     const renkler = [
-      "#ff2e63", "#00b8a9", "#845ec2",
-      "#ff9600", "#0081cf", "#ff4d6d"
+      "#fb7185", // pembe
+      "#22c55e", // yeşil
+      "#38bdf8", // mavi
+      "#eab308", // sarı
+      "#a855f7", // mor
+      "#f97316"  // turuncu
     ];
 
-    let index = 0; 
+    const inner = document.getElementById("inner-screen");
+    const instruction = document.getElementById("instruction");
+    let index = 0;
+    let finished = false;
 
-    document.body.addEventListener("click", function(e) {
-      
-      if (index >= kelimeler.length) {
-        document.getElementById("secret-message").classList.add("show");
-        return;
+    inner.addEventListener("click", function (e) {
+      if (finished) return;
+
+      // İlk tıklamada alt yazıyı kaldır
+      if (index === 0 && instruction) {
+        instruction.style.opacity = "0";
+        setTimeout(() => instruction.remove(), 500);
       }
+
+      const rect = inner.getBoundingClientRect();
 
       const yazi = document.createElement("div");
       yazi.className = "floating-text";
-
       yazi.innerText = kelimeler[index];
+
+      // Renk random
       yazi.style.color = renkler[Math.floor(Math.random() * renkler.length)];
 
-      yazi.style.left = e.clientX + "px";
-      yazi.style.top = e.clientY + "px";
+      // Tıklanan yerin, inner-screen içindeki konumu
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
 
-      document.body.appendChild(yazi);
+      // Yazıyı tıklanan noktanın ortasına yakın konumlandır
+      yazi.style.left = (x - 20) + "px";
+      yazi.style.top  = (y - 10) + "px";
 
+      inner.appendChild(yazi);
       setTimeout(() => yazi.remove(), 2000);
 
-      index++; 
+      index++;
+
+      // Tüm kelimeler bittiyse: siyah ekran -> beyaz + gizli mesaj
+      if (index >= kelimeler.length) {
+        finished = true;
+        setTimeout(() => {
+          inner.classList.add("finished");
+        }, 800);
+      }
     });
   </script>
-
 </body>
 </html>
-
 
