@@ -1,16 +1,8 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P55R71D5FM"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-P55R71D5FM');
-    </script>
-
     <meta charset="UTF-8">
-    <title>Büyülü Gül Animasyonu</title>
+    <title>Beyaz Gül Animasyonu</title>
     <style>
         body {
             background-color: #050505;
@@ -25,18 +17,7 @@
 
         .container { position: relative; }
 
-        /* Cam Fanus */
-        .glass {
-            width: 240px;
-            height: 380px;
-            background: linear-gradient(to top, rgba(255,255,255,0.05), rgba(255,255,255,0.12));
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 120px 120px 10px 10px;
-            position: relative;
-            box-shadow: 0 0 40px rgba(255, 100, 100, 0.1);
-            z-index: 2;
-        }
-
+        /* Taban */
         .base {
             position: absolute;
             bottom: -15px;
@@ -47,12 +28,13 @@
             background: #111;
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            z-index: 1;
         }
 
         /* Çiçek Sapı */
         .stem {
             position: absolute;
-            bottom: 25px;
+            bottom: 10px;
             left: 50%;
             width: 4px;
             height: 0;
@@ -61,13 +43,13 @@
             animation: grow-stem 5s forwards linear;
         }
 
-        /* Yeşil Yapraklar - Düzeltilmiş Yön */
+        /* Yapraklar */
         .leaf {
             position: absolute;
             width: 30px;
             height: 15px;
             background: #2d5a27;
-            border-radius: 0 20px; /* Uçları yukarı bakacak şekilde ayarlandı */
+            border-radius: 0 20px;
             opacity: 0;
             animation: show 2s 3s forwards;
         }
@@ -76,7 +58,7 @@
         .l3 { left: -25px; top: 90px; transform: rotate(20deg); }
         .l4 { right: -25px; top: 60px; transform: rotate(-20deg); }
 
-        /* Gül Başlığı - Tamamen Düz ve Yukarı Bakan Form */
+        /* Beyaz Gül Başlığı */
         .rose-head {
             position: absolute;
             top: -50px;
@@ -89,31 +71,32 @@
 
         .petal {
             position: absolute;
-            background: #d00000;
-            border-radius: 20% 20% 50% 50% / 80% 80% 20% 20%; /* Gül yaprağı formu düzeltildi */
+            background: #ffffff; /* Beyaz Renk */
+            border-radius: 20% 20% 50% 50% / 80% 80% 20% 20%;
             width: 100%;
             height: 100%;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.4);
-            border: 1px solid #900000;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+            border: 1px solid #f0f0f0;
             transform-origin: bottom center;
         }
         
-        .p1 { transform: scale(1); z-index: 5; background: #e60000; }
-        .p2 { transform: scale(1.1) rotate(20deg); z-index: 4; }
-        .p3 { transform: scale(1.1) rotate(-20deg); z-index: 4; }
-        .p4 { transform: scale(1.2) rotate(40deg); opacity: 0.9; z-index: 3; }
-        .p5 { transform: scale(1.2) rotate(-40deg); opacity: 0.9; z-index: 3; }
+        .p1 { transform: scale(1); z-index: 5; background: #ffffff; }
+        .p2 { transform: scale(1.1) rotate(20deg); z-index: 4; background: #fdfdfd; }
+        .p3 { transform: scale(1.1) rotate(-20deg); z-index: 4; background: #fdfdfd; }
+        .p4 { transform: scale(1.2) rotate(40deg); opacity: 0.9; z-index: 3; background: #fcfcfc; }
+        .p5 { transform: scale(1.2) rotate(-40deg); opacity: 0.9; z-index: 3; background: #fcfcfc; }
 
-        /* Düşen Yapraklar */
+        /* Düşen Beyaz Yaprak */
         .falling-petal {
             position: absolute;
             width: 18px;
             height: 12px;
-            background: #a00000;
+            background: #ffffff;
             border-radius: 50% 0 50% 0;
             opacity: 0;
             top: 150px;
             left: 50%;
+            box-shadow: 0 0 5px rgba(255,255,255,0.2);
         }
         .fall-trigger { animation: petal-fall 4s 12s forwards; }
 
@@ -129,6 +112,9 @@
             letter-spacing: 5px;
             opacity: 0;
             text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+            white-space: nowrap;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         /* Animasyonlar */
@@ -139,8 +125,8 @@
         @keyframes wither {
             100% { 
                 transform: translateX(-50%) scale(0.9) translateY(40px) rotate(15deg); 
-                filter: brightness(0.2) grayscale(0.8); 
-                opacity: 0.7;
+                filter: brightness(0.5) grayscale(0.5); 
+                opacity: 0.6;
             }
         }
 
@@ -158,23 +144,21 @@
 
     <div class="container">
         <h1 id="message">MUTLU YILLAR</h1>
-        <div class="glass">
-            <div class="stem">
-                <div class="leaf l1"></div>
-                <div class="leaf l2"></div>
-                <div class="leaf l3"></div>
-                <div class="leaf l4"></div>
-                
-                <div class="rose-head">
-                    <div class="petal p1"></div>
-                    <div class="petal p2"></div>
-                    <div class="petal p3"></div>
-                    <div class="petal p4"></div>
-                    <div class="petal p5"></div>
-                </div>
+        <div class="stem">
+            <div class="leaf l1"></div>
+            <div class="leaf l2"></div>
+            <div class="leaf l3"></div>
+            <div class="leaf l4"></div>
+            
+            <div class="rose-head">
+                <div class="petal p1"></div>
+                <div class="petal p2"></div>
+                <div class="petal p3"></div>
+                <div class="petal p4"></div>
+                <div class="petal p5"></div>
             </div>
-            <div class="falling-petal" id="petal1"></div>
         </div>
+        <div class="falling-petal" id="petal1"></div>
         <div class="base"></div>
     </div>
 
@@ -189,4 +173,3 @@
     </script>
 </body>
 </html>
-
