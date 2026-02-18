@@ -19,10 +19,10 @@
       --stem:#22c55e;
       --stemGlow: rgba(34,197,94,.7);
 
-      /* Gül: beyaz + hafif kırık beyaz gölge */
-      --rose1:#ffffff;
-      --rose2:#f1f1f1;
-      --rose3:#e6e6e6;
+      /* Zambak tonları (beyaz) */
+      --petal1:#ffffff;
+      --petal2:#f3f3f3;
+      --petal3:#e8e8e8;
 
       /* Glow güçlendirildi */
       --glow1: rgba(255,255,255,.95);
@@ -40,7 +40,7 @@
       font-family: Arial, sans-serif;
     }
 
-    /* Tüm ekran tıklanabilir: refresh yok, restart var */
+    /* Tüm ekran tıklanabilir (refresh yok, restart var) */
     .stage{
       position: fixed;
       inset: 0;
@@ -65,165 +65,143 @@
         0 0 48px rgba(255,255,255,.22);
       pointer-events: none;
       animation: msgIn 1.1s ease-out forwards;
-      animation-delay: 8.1s; /* solma + dökülme sonrası */
+      animation-delay: 9.2s; /* solma + dökülme sonrası */
     }
 
-    .hint{
-      position: fixed;
-      left: 50%;
-      bottom: 22px;
-      transform: translateX(-50%);
-      color: rgba(255,255,255,.55);
-      font-size: 13px;
-      letter-spacing: .3px;
-      user-select:none;
-      pointer-events:none;
-    }
-
-    /* Sahne: çiçek en alttan büyür */
+    /* Sahne: zambaklar en alttan büyür */
     .scene{
       position: fixed;
       left: 0;
       right: 0;
       bottom: 0;
-      height: 78vh;
+      height: 80vh;
       pointer-events: none;
     }
 
-    /* Bitki kökü */
+    /* Bitki kökü (çoklu saplar) */
     .plant{
       position:absolute;
       left: 50%;
       bottom: 0;
       transform: translateX(-50%);
-      width: 260px;
-      height: 78vh;
+      width: 420px;
+      height: 80vh;
       transform-origin: 50% 100%;
       opacity: 1;
-      animation: wilt 1.9s ease-in forwards;
-      animation-delay: 6.2s;
+      animation: wilt 2.0s ease-in forwards;
+      animation-delay: 7.0s;
     }
 
-    /* Sap */
+    /* Saplar (kısa başlar, orta boya gelir) */
     .stem{
       position:absolute;
-      left: 50%;
       bottom: 0;
-      width: 8px;
+      width: 7px;
       height: 0px;
-      transform: translateX(-50%);
       border-radius: 999px;
       background: linear-gradient(#179a4b, var(--stem));
       box-shadow: 0 0 22px var(--stemGlow);
-      animation: stemGrow 2.2s cubic-bezier(.2,.9,.2,1) forwards;
+      animation: stemGrow 2.3s cubic-bezier(.2,.9,.2,1) forwards;
     }
+    .s1{ left: 50%; animation-delay: .0s; }
+    .s2{ left: 44%; animation-delay: .1s; }
+    .s3{ left: 56%; animation-delay: .15s; }
+    .s4{ left: 38%; animation-delay: .2s; }
+    .s5{ left: 62%; animation-delay: .25s; }
 
     /* Yapraklar */
     .leaf{
       position:absolute;
-      left:50%;
-      bottom: 24vh;
-      width: 72px;
-      height: 38px;
+      bottom: 28vh;
+      width: 76px;
+      height: 40px;
       opacity: 0;
       background: radial-gradient(circle at 30% 35%, #53e08c, #179a4b 70%);
       box-shadow: 0 0 18px rgba(34,197,94,.30);
       border-radius: 999px 999px 999px 0;
       transform-origin: 0% 50%;
       animation: leafIn .9s ease-out forwards;
-      animation-delay: 1.2s;
+      animation-delay: 1.4s;
     }
-    .leaf.left{
-      margin-left: -34px;
-      transform: translateX(-50%) rotate(-26deg) scale(.2);
-    }
-    .leaf.right{
-      margin-left: 34px;
-      transform: translateX(-50%) rotate(206deg) scale(.2);
-      border-radius: 999px 999px 0 999px;
-      transform-origin: 100% 50%;
-    }
+    .l1{ left: 50%; margin-left: -120px; transform: translateX(-50%) rotate(-28deg) scale(.2); }
+    .l2{ left: 50%; margin-left: 120px;  transform: translateX(-50%) rotate(208deg) scale(.2); border-radius: 999px 999px 0 999px; transform-origin: 100% 50%; }
+    .l3{ left: 50%; margin-left: -40px;  transform: translateX(-50%) rotate(-18deg) scale(.2); }
+    .l4{ left: 50%; margin-left: 40px;   transform: translateX(-50%) rotate(198deg) scale(.2); border-radius: 999px 999px 0 999px; transform-origin: 100% 50%; }
 
-    /* GÜL */
-    .rose{
+    /* ZAMBAK grupları (çoklu çiçek) */
+    .lily{
       position:absolute;
-      left:50%;
-      bottom: calc(24vh + 110px);
-      width: 220px;
+      width: 180px;
       height: 220px;
-      transform: translateX(-50%) scale(.12);
       opacity: 0;
-      filter: drop-shadow(0 0 28px var(--glow1));
-      animation: roseBloom 1.5s cubic-bezier(.2,.9,.2,1) forwards;
-      animation-delay: 2.7s;
+      filter: drop-shadow(0 0 30px var(--glow1));
+      animation: lilyBloom 1.6s cubic-bezier(.2,.9,.2,1) forwards;
+      transform: scale(.12);
     }
 
-    /* Glow katmanı (arttırıldı) */
-    .roseGlow{
-      position:absolute;
-      inset:-18px;
-      border-radius: 999px;
-      background: radial-gradient(circle,
-        rgba(255,255,255,.30),
-        rgba(255,255,255,.16) 28%,
-        rgba(255,255,255,0) 62%);
-      opacity: 0;
-      animation: glowPulse 1.9s ease-in-out infinite;
-      animation-delay: 3.2s;
-      filter: blur(0.3px);
-    }
+    /* Konumlar */
+    .ly1{ left: 50%; bottom: calc(28vh + 120px); transform-origin: 50% 100%; animation-delay: 2.8s; }
+    .ly2{ left: 44%; bottom: calc(28vh + 110px); transform-origin: 50% 100%; animation-delay: 3.0s; }
+    .ly3{ left: 56%; bottom: calc(28vh + 110px); transform-origin: 50% 100%; animation-delay: 3.1s; }
+    .ly4{ left: 38%; bottom: calc(28vh + 95px);  transform-origin: 50% 100%; animation-delay: 3.2s; }
+    .ly5{ left: 62%; bottom: calc(28vh + 95px);  transform-origin: 50% 100%; animation-delay: 3.3s; }
 
-    /* Gül yaprakları: katman katman */
+    /* Zambak yaprakları (6 büyük petal) */
     .petal{
       position:absolute;
       left:50%;
       top:50%;
-      transform: translate(-50%,-50%);
+      width: 130px;
+      height: 46px;
+      transform-origin: 0% 50%;
       border-radius: 999px;
-      background: radial-gradient(circle at 30% 30%, var(--rose1), var(--rose2) 70%, var(--rose3));
+      background: radial-gradient(circle at 30% 30%, var(--petal1), var(--petal2) 70%, var(--petal3));
       box-shadow:
-        0 0 20px var(--glow2),
-        0 0 60px var(--glow3);
+        0 0 22px var(--glow2),
+        0 0 70px var(--glow3);
       opacity: .98;
-      filter: saturate(.9);
     }
+    .p1{ transform: translate(-10%,-50%) rotate(0deg); }
+    .p2{ transform: translate(-10%,-50%) rotate(60deg); }
+    .p3{ transform: translate(-10%,-50%) rotate(120deg); }
+    .p4{ transform: translate(-10%,-50%) rotate(180deg); }
+    .p5{ transform: translate(-10%,-50%) rotate(240deg); }
+    .p6{ transform: translate(-10%,-50%) rotate(300deg); }
 
-    /* Dış yapraklar */
-    .pA{ width: 170px; height: 92px; transform: translate(-50%,-50%) rotate(10deg); }
-    .pB{ width: 170px; height: 92px; transform: translate(-50%,-50%) rotate(55deg); }
-    .pC{ width: 170px; height: 92px; transform: translate(-50%,-50%) rotate(100deg); }
-    .pD{ width: 170px; height: 92px; transform: translate(-50%,-50%) rotate(145deg); }
-
-    /* Orta katman */
-    .pE{ width: 135px; height: 74px; transform: translate(-50%,-50%) rotate(25deg); }
-    .pF{ width: 135px; height: 74px; transform: translate(-50%,-50%) rotate(85deg); }
-    .pG{ width: 135px; height: 74px; transform: translate(-50%,-50%) rotate(145deg); }
-    .pH{ width: 135px; height: 74px; transform: translate(-50%,-50%) rotate(205deg); }
-
-    /* İç katman */
-    .pI{ width: 98px; height: 56px; transform: translate(-50%,-50%) rotate(40deg); }
-    .pJ{ width: 98px; height: 56px; transform: translate(-50%,-50%) rotate(110deg); }
-    .pK{ width: 98px; height: 56px; transform: translate(-50%,-50%) rotate(180deg); }
-
-    /* Gül tomurcuğu (merkez) */
+    /* Merkez (stamen hissi) */
     .core{
       position:absolute;
       left:50%;
       top:50%;
-      width: 40px;
-      height: 40px;
-      transform: translate(-50%,-50%) rotate(18deg);
+      width: 18px;
+      height: 18px;
+      transform: translate(-50%,-50%);
       border-radius: 999px;
-      background: radial-gradient(circle at 30% 30%, #fff, #ececec 75%);
-      box-shadow: 0 0 18px rgba(255,255,255,.7), 0 0 55px rgba(255,255,255,.22);
+      background: #fff;
+      box-shadow: 0 0 18px rgba(255,255,255,.8), 0 0 60px rgba(255,255,255,.3);
     }
 
-    /* Dökülen yapraklar (gül yaprağı gibi) */
+    /* Glow katmanı (daha güçlü) */
+    .glow{
+      position:absolute;
+      inset:-20px;
+      border-radius: 999px;
+      background: radial-gradient(circle,
+        rgba(255,255,255,.35),
+        rgba(255,255,255,.18) 28%,
+        rgba(255,255,255,0) 62%);
+      opacity: 0;
+      animation: glowPulse 2.0s ease-in-out infinite;
+      animation-delay: 3.4s;
+      filter: blur(0.4px);
+    }
+
+    /* Dökülen yapraklar */
     .fall{
       position:absolute;
       left:50%;
       top:50%;
-      width: 18px;
+      width: 20px;
       height: 12px;
       border-radius: 999px 999px 999px 6px;
       background: radial-gradient(circle at 30% 30%, #fff, #e9e9e9 70%);
@@ -231,19 +209,19 @@
       opacity: 0;
     }
 
-    .f1{ animation: fall1 2.2s ease-in forwards; animation-delay: 4.9s; }
-    .f2{ animation: fall2 2.4s ease-in forwards; animation-delay: 5.0s; }
-    .f3{ animation: fall3 2.6s ease-in forwards; animation-delay: 5.15s; }
-    .f4{ animation: fall4 2.3s ease-in forwards; animation-delay: 5.25s; }
-    .f5{ animation: fall5 2.7s ease-in forwards; animation-delay: 5.35s; }
-    .f6{ animation: fall6 2.5s ease-in forwards; animation-delay: 5.45s; }
-    .f7{ animation: fall7 2.8s ease-in forwards; animation-delay: 5.55s; }
+    /* Birkaç düşüş */
+    .f1{ animation: fall1 2.3s ease-in forwards; animation-delay: 5.4s; }
+    .f2{ animation: fall2 2.5s ease-in forwards; animation-delay: 5.6s; }
+    .f3{ animation: fall3 2.7s ease-in forwards; animation-delay: 5.8s; }
+    .f4{ animation: fall4 2.4s ease-in forwards; animation-delay: 6.0s; }
+    .f5{ animation: fall5 2.8s ease-in forwards; animation-delay: 6.1s; }
+    .f6{ animation: fall6 2.6s ease-in forwards; animation-delay: 6.2s; }
 
-    /* PLAY kontrol (tıklayınca reset) */
+    /* PLAY kontrol: tıklayınca reset */
     .scene:not(.play) .stem,
     .scene:not(.play) .leaf,
-    .scene:not(.play) .rose,
-    .scene:not(.play) .roseGlow,
+    .scene:not(.play) .lily,
+    .scene:not(.play) .glow,
     .scene:not(.play) .plant,
     .scene:not(.play) .fall,
     .message:not(.play){
@@ -255,29 +233,29 @@
     /* Keyframes */
     @keyframes stemGrow{
       from{ height:0; }
-      to{ height: calc(24vh + 160px); }
+      to{ height: calc(28vh + 140px); } /* orta boy */
     }
 
     @keyframes leafIn{
       from{ opacity:0; transform: translateX(-50%) rotate(var(--a)) scale(.2); }
       to{ opacity:1; transform: translateX(-50%) rotate(var(--a)) scale(1); }
     }
-    .leaf.left{ --a:-26deg; }
-    .leaf.right{ --a:206deg; }
+    .l1,.l3{ --a:-28deg; }
+    .l2,.l4{ --a:208deg; }
 
-    @keyframes roseBloom{
+    @keyframes lilyBloom{
       0%{ opacity:0; transform: translateX(-50%) scale(.12); }
       100%{ opacity:1; transform: translateX(-50%) scale(1); }
     }
 
     @keyframes glowPulse{
-      0%,100%{ opacity:.25; transform: scale(1); filter: blur(0.2px); }
-      50%{ opacity:.70; transform: scale(1.08); filter: blur(0.6px); }
+      0%,100%{ opacity:.28; transform: scale(1); filter: blur(0.2px); }
+      50%{ opacity:.75; transform: scale(1.08); filter: blur(0.6px); }
     }
 
     @keyframes wilt{
       0%{ opacity:1; filter:none; transform: translateX(-50%) scale(1) rotate(0deg); }
-      100%{ opacity:.14; filter: grayscale(1); transform: translateX(-50%) scale(.90) rotate(-10deg); }
+      100%{ opacity:.12; filter: grayscale(1); transform: translateX(-50%) scale(.90) rotate(-10deg); }
     }
 
     @keyframes msgIn{
@@ -285,41 +263,36 @@
       to{ opacity:1; transform: translateX(-50%) translateY(0); }
     }
 
-    /* Düşüşler (petal dökülme) */
+    /* Düşüşler */
     @keyframes fall1{
       0%{opacity:0; transform: translate(-50%,-50%) scale(1) rotate(0)}
       10%{opacity:1}
-      100%{opacity:0; transform: translate(calc(-50% - 120px), calc(-50% + 340px)) scale(.85) rotate(260deg)}
+      100%{opacity:0; transform: translate(calc(-50% - 140px), calc(-50% + 380px)) scale(.85) rotate(260deg)}
     }
     @keyframes fall2{
       0%{opacity:0; transform: translate(-50%,-50%) scale(1) rotate(0)}
       10%{opacity:1}
-      100%{opacity:0; transform: translate(calc(-50% + 140px), calc(-50% + 360px)) scale(.8) rotate(320deg)}
+      100%{opacity:0; transform: translate(calc(-50% + 160px), calc(-50% + 400px)) scale(.8) rotate(320deg)}
     }
     @keyframes fall3{
       0%{opacity:0; transform: translate(-50%,-50%) scale(1) rotate(0)}
       10%{opacity:1}
-      100%{opacity:0; transform: translate(calc(-50% - 170px), calc(-50% + 380px)) scale(.78) rotate(200deg)}
+      100%{opacity:0; transform: translate(calc(-50% - 180px), calc(-50% + 420px)) scale(.78) rotate(200deg)}
     }
     @keyframes fall4{
       0%{opacity:0; transform: translate(-50%,-50%) scale(1) rotate(0)}
       10%{opacity:1}
-      100%{opacity:0; transform: translate(calc(-50% + 70px), calc(-50% + 330px)) scale(.9) rotate(260deg)}
+      100%{opacity:0; transform: translate(calc(-50% + 80px), calc(-50% + 360px)) scale(.9) rotate(260deg)}
     }
     @keyframes fall5{
       0%{opacity:0; transform: translate(-50%,-50%) scale(1) rotate(0)}
       10%{opacity:1}
-      100%{opacity:0; transform: translate(calc(-50% + 190px), calc(-50% + 400px)) scale(.75) rotate(330deg)}
+      100%{opacity:0; transform: translate(calc(-50% + 200px), calc(-50% + 440px)) scale(.75) rotate(330deg)}
     }
     @keyframes fall6{
       0%{opacity:0; transform: translate(-50%,-50%) scale(1) rotate(0)}
       10%{opacity:1}
-      100%{opacity:0; transform: translate(calc(-50% - 60px), calc(-50% + 370px)) scale(.83) rotate(230deg)}
-    }
-    @keyframes fall7{
-      0%{opacity:0; transform: translate(-50%,-50%) scale(1) rotate(0)}
-      10%{opacity:1}
-      100%{opacity:0; transform: translate(calc(-50% + 20px), calc(-50% + 420px)) scale(.7) rotate(285deg)}
+      100%{opacity:0; transform: translate(calc(-50% - 60px), calc(-50% + 400px)) scale(.83) rotate(230deg)}
     }
   </style>
 </head>
@@ -327,25 +300,56 @@
 <body>
   <div class="stage" id="stage" title="Animasyonu yeniden oynat">
     <div class="message" id="message">Mutlu Yıllar</div>
-    <div class="hint">Tıkla: animasyon baştan oynar</div>
 
     <div class="scene" id="scene">
       <div class="plant">
-        <div class="stem"></div>
-        <div class="leaf left"></div>
-        <div class="leaf right"></div>
+        <!-- saplar -->
+        <div class="stem s1"></div>
+        <div class="stem s2"></div>
+        <div class="stem s3"></div>
+        <div class="stem s4"></div>
+        <div class="stem s5"></div>
 
-        <div class="rose">
-          <div class="petal pA"></div><div class="petal pB"></div><div class="petal pC"></div><div class="petal pD"></div>
-          <div class="petal pE"></div><div class="petal pF"></div><div class="petal pG"></div><div class="petal pH"></div>
-          <div class="petal pI"></div><div class="petal pJ"></div><div class="petal pK"></div>
-          <div class="core"></div>
-          <div class="roseGlow"></div>
+        <!-- yapraklar -->
+        <div class="leaf l1"></div>
+        <div class="leaf l2"></div>
+        <div class="leaf l3"></div>
+        <div class="leaf l4"></div>
 
-          <!-- dökülen yapraklar -->
-          <div class="fall f1"></div><div class="fall f2"></div><div class="fall f3"></div>
-          <div class="fall f4"></div><div class="fall f5"></div><div class="fall f6"></div><div class="fall f7"></div>
+        <!-- zambaklar -->
+        <div class="lily ly1">
+          <div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div>
+          <div class="petal p4"></div><div class="petal p5"></div><div class="petal p6"></div>
+          <div class="core"></div><div class="glow"></div>
         </div>
+
+        <div class="lily ly2">
+          <div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div>
+          <div class="petal p4"></div><div class="petal p5"></div><div class="petal p6"></div>
+          <div class="core"></div><div class="glow"></div>
+        </div>
+
+        <div class="lily ly3">
+          <div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div>
+          <div class="petal p4"></div><div class="petal p5"></div><div class="petal p6"></div>
+          <div class="core"></div><div class="glow"></div>
+        </div>
+
+        <div class="lily ly4">
+          <div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div>
+          <div class="petal p4"></div><div class="petal p5"></div><div class="petal p6"></div>
+          <div class="core"></div><div class="glow"></div>
+        </div>
+
+        <div class="lily ly5">
+          <div class="petal p1"></div><div class="petal p2"></div><div class="petal p3"></div>
+          <div class="petal p4"></div><div class="petal p5"></div><div class="petal p6"></div>
+          <div class="core"></div><div class="glow"></div>
+        </div>
+
+        <!-- dökülen yapraklar -->
+        <div class="fall f1"></div><div class="fall f2"></div><div class="fall f3"></div>
+        <div class="fall f4"></div><div class="fall f5"></div><div class="fall f6"></div>
       </div>
     </div>
   </div>
@@ -358,7 +362,7 @@
     function restart(){
       scene.classList.remove('play');
       message.classList.remove('play');
-      void scene.offsetWidth; // reflow reset
+      void scene.offsetWidth; // reset
       scene.classList.add('play');
       message.classList.add('play');
     }
@@ -366,9 +370,8 @@
     // Sayfa açılınca otomatik başlat
     restart();
 
-    // Ekrana tıklayınca baştan oynat (sayfa yenilenmez)
+    // Ekrana tıklayınca baştan oynat
     stage.addEventListener('click', restart);
   </script>
 </body>
 </html>
-
