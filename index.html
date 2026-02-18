@@ -1,155 +1,180 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-   <script async src="https://www.googletagmanager.com/gtag/js?id=G-P55R71D5FM"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config','G-P55R71D5FM');
-  </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P55R71D5FM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-P55R71D5FM');
+    </script>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sihirli Çiçek</title>
+    <title>Büyülü Gül Animasyonu</title>
     <style>
         body {
-            background-color: #0b0d11;
+            background-color: #050505;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
-            font-family: 'Arial', sans-serif;
         }
 
-        .container {
-            position: relative;
-            text-align: center;
-        }
+        .container { position: relative; }
 
-        /* Cam Fanus */
+        /* Cam Fanus ve Işıltı */
         .glass {
-            width: 200px;
-            height: 300px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-bottom: none;
-            border-radius: 100px 100px 0 0;
-            position: relative;
-            z-index: 2;
-        }
-
-        .glass::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: -10px;
             width: 220px;
-            height: 10px;
-            background: #333;
-            border-radius: 5px;
+            height: 350px;
+            background: linear-gradient(to top, rgba(255,255,255,0.05), rgba(255,255,255,0.15));
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 110px 110px 5px 5px;
+            position: relative;
+            box-shadow: 0 0 50px rgba(255, 100, 100, 0.1);
         }
 
-        /* Çiçek Gövdesi */
+        /* Toprak/Taban */
+        .base {
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 250px;
+            height: 20px;
+            background: #1a1a1a;
+            border-radius: 10px;
+        }
+
+        /* Çiçek Sapı */
         .stem {
             position: absolute;
-            bottom: 10px;
+            bottom: 20px;
             left: 50%;
             width: 4px;
             height: 0;
-            background: #2d5a27;
+            background: linear-gradient(to top, #1a3a1a, #2d5a27);
             transform: translateX(-50%);
-            animation: grow-stem 4s forwards;
-        }
-
-        /* Çiçek Başlığı (Gül) */
-        .flower-head {
-            position: absolute;
-            bottom: 160px;
-            left: 50%;
-            width: 50px;
-            height: 50px;
-            background: #e63946;
-            border-radius: 50% 50% 10% 10%;
-            transform: translateX(-50%) scale(0);
-            opacity: 0;
-            animation: bloom 3s 3.5s forwards, wither 4s 8s forwards;
-            box-shadow: 0 0 20px rgba(230, 57, 70, 0.5);
+            animation: grow-stem 5s forwards linear;
         }
 
         /* Yapraklar */
         .leaf {
             position: absolute;
-            width: 20px;
-            height: 10px;
+            width: 25px;
+            height: 12px;
             background: #2d5a27;
-            border-radius: 15px 0;
+            border-radius: 20px 0;
             opacity: 0;
-            animation: fade-in 2s 2s forwards;
+            animation: show 2s 3s forwards;
+        }
+        .leaf.l1 { left: -22px; top: 120px; transform: rotate(-40deg); }
+        .leaf.l2 { right: -22px; top: 80px; transform: rotate(220deg); }
+
+        /* Gül Başlığı - Katmanlı Yapı */
+        .rose-head {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%) scale(0);
+            width: 50px;
+            height: 50px;
+            animation: bloom 4s 4s forwards, wither 5s 10s forwards;
         }
 
-        .leaf.left { left: -15px; top: 100px; transform: rotate(-30deg); }
-        .leaf.right { right: -15px; top: 70px; transform: rotate(210deg); }
+        .petal {
+            position: absolute;
+            background: #d00000;
+            border-radius: 50% 50% 10% 10%;
+            width: 100%;
+            height: 100%;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+        }
+        .p1 { transform: scale(1); z-index: 3; }
+        .p2 { transform: scale(1.2) rotate(30deg); opacity: 0.8; }
+        .p3 { transform: scale(1.2) rotate(-30deg); opacity: 0.8; }
+
+        /* Düşen Yapraklar */
+        .falling-petal {
+            position: absolute;
+            width: 15px;
+            height: 10px;
+            background: #a00000;
+            border-radius: 50%;
+            opacity: 0;
+            bottom: 10px;
+            left: 50%;
+        }
+        .fall-trigger { animation: petal-fall 4s 12s forwards; }
 
         /* Mesaj */
         #message {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 2.5rem;
+            width: 100%;
+            text-align: center;
+            top: -80px;
+            color: #ffcccc;
+            font-size: 2rem;
+            font-weight: 300;
+            letter-spacing: 3px;
             opacity: 0;
-            white-space: nowrap;
-            text-shadow: 0 0 15px rgba(255,255,255,0.7);
+            text-shadow: 0 0 20px rgba(255, 100, 100, 0.5);
         }
 
-        /* Animasyonlar */
-        @keyframes grow-stem {
-            to { height: 150px; }
-        }
-
-        @keyframes bloom {
-            to { transform: translateX(-50%) scale(1); opacity: 1; }
-        }
-
-        @keyframes fade-in {
-            to { opacity: 1; }
-        }
-
+        /* Animasyon Tanımları */
+        @keyframes grow-stem { to { height: 180px; } }
+        @keyframes show { to { opacity: 1; } }
+        @keyframes bloom { to { transform: translateX(-50%) scale(1.2); } }
+        
         @keyframes wither {
-            0% { transform: translateX(-50%) scale(1) rotate(0); filter: brightness(1); }
-            100% { transform: translateX(-50%) scale(0.8) translateY(40px) rotate(15deg); filter: brightness(0.3) grayscale(1); opacity: 0.5; }
+            100% { 
+                transform: translateX(-50%) scale(1) translateY(30px) rotate(20deg); 
+                filter: brightness(0.2) sepia(1); 
+            }
         }
 
-        .show-msg {
-            animation: final-text 3s forwards;
+        @keyframes petal-fall {
+            0% { opacity: 0; transform: translateY(-100px) rotate(0); }
+            50% { opacity: 1; }
+            100% { opacity: 0.8; transform: translateY(160px) translateX(30px) rotate(45deg); }
         }
 
-        @keyframes final-text {
-            to { opacity: 1; transform: translate(-50%, -150%); }
-        }
+        .fade-in-text { animation: final-text 4s forwards; }
+        @keyframes final-text { to { opacity: 1; } }
     </style>
 </head>
 <body>
 
     <div class="container">
+        <h1 id="message">MUTLU YILLAR</h1>
         <div class="glass">
             <div class="stem">
-                <div class="leaf left"></div>
-                <div class="leaf right"></div>
-                <div class="flower-head"></div>
+                <div class="leaf l1"></div>
+                <div class="leaf l2"></div>
+                <div class="rose-head">
+                    <div class="petal p1"></div>
+                    <div class="petal p2"></div>
+                    <div class="petal p3"></div>
+                </div>
             </div>
+            <div class="falling-petal" id="petal1"></div>
         </div>
-        <h1 id="message">Mutlu Yıllar</h1>
+        <div class="base"></div>
     </div>
 
     <script>
-        // Çiçek solduktan sonra mesajın gelmesi için zamanlayıcı
+        // Animasyon Akışı
         setTimeout(() => {
-            document.getElementById('message').classList.add('show-msg');
-        }, 11000); // 11. saniyede yazı görünür
+            // Çiçek solduktan sonra düşen yaprağı tetikle
+            document.getElementById('petal1').classList.add('fall-trigger');
+        }, 11000);
+
+        setTimeout(() => {
+            // En son mesajı göster
+            document.getElementById('message').classList.add('fade-in-text');
+        }, 14000);
     </script>
 </body>
 </html>
